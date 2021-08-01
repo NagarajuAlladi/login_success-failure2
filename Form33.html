@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document33</title>
+</head>
+<body>
+    <form id="form" >
+        <input type="text" id="name" placeholder="UserName:" style="text-align:center"/><br>
+        <input type="email" id="email" placeholder="Enter Email:" style="text-align:center"/><br>
+        <!-- <input type="number" id="id" placeholder="Id"/> -->
+        <input type="submit" value="submit">
+    </form>
+    
+    <section>
+
+    <div style="text-align: center;margin: 20px 0px;text-decoration: underline;">JSON Placeholders Users</div>
+    <p id="demo1"></p>
+    <p id="demo2"></p>
+        
+    <div id="users" >
+    <!-- hello -->
+    </div>
+
+    <div class="api_error" style="display: none; text-align: center;">
+    <h4>500 | API call is failed</h4>
+    </div>
+    </section>
+</body>
+
+<script>
+
+    document.getElementById('form').addEventListener('click',function(e){
+        e.preventDefault();
+
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+
+        function success(){
+            var result = JSON.parse(xhr.responseText);
+            console.log(result.userName);
+            console.log(result.email);
+
+            document.getElementById("demo1").innerHTML = result.userName;
+            document.getElementById("demo2").innerHTML = result.email;
+        }
+
+        function error(err){
+            document.querySelector('.api_error').style.display = "block";
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.onload = success;
+        xhr.onerror = error;
+        xhr.open('POST',"https://jsonplaceholder.typicode.com/users");
+        xhr.setRequestHeader('Content-Type','application/json; charset = UTF-8');
+        xhr.send(JSON.stringify({
+            userName : name,
+            email : email
+        }))
+    });
+</script>
+</html>
